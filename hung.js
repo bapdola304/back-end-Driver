@@ -1,5 +1,5 @@
 function hungpro(){
-    console.log('hungdeptrai');
+    console.log('hungxauvcl');
     
 }
 hungpro();
