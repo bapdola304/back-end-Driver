@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.listen(3000, (req, res) => {
-    console.log('Server is conneting ....')
+    console.log('Server is conneting in port 3000....')
 })
 
 ///Mongoose connect
