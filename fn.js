@@ -1,0 +1,1 @@
+module.exports.logABC = ()=>{console.log('hello world')}
