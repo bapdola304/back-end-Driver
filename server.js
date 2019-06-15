@@ -21,9 +21,9 @@ db.once('open', function () {
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
-app.listen(3000, (req, res) => {
-    console.log('Server is conneting in port 3000....')
+app.use(express.static('uploads'))
+app.listen(3001, (req, res) => {
+    console.log('Server is conneting in port 3001....')
 })
 
 ///Mongoose connect

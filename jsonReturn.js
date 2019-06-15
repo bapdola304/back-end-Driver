@@ -1,7 +1,8 @@
-module.exports.jsonReturn = (res, status, message, oj) => {
+module.exports.jsonReturn = (res, status, message, oj, userInfor) => {
     res.json({
         "status": status,
         "message": message,
-        "__": oj
+        "data": oj,
+        "userInfor" : userInfor
     })
 }

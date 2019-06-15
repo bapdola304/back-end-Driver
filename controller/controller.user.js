@@ -2,16 +2,20 @@ const jwt = require("jsonwebtoken")
 const modelUser = require('../model/model.user')
 const bcrypt = require('bcrypt')
 
-var jsonReturn = (res, status, message, user) => {
+var jsonReturn = (res, status, message, token, user) => {
     res.json({
         "status": status,
         "message": message,
-        "Infor": user
+        "token": token,
+        "user" :user
+
     })
 }
 module.exports.login = (req, res) => {
     var un = req.body.username
     var pw = req.body.password
+    console.log(un);
+    
     modelUser.findOne({ username: un })
         .exec()
         .then(doc => {
@@ -23,8 +27,8 @@ module.exports.login = (req, res) => {
                     username: doc.username,
                     admin: doc.admin
                 }
-                jwt.sign({ infor }, 'votong123', { expiresIn: '1d' }, function (err, token) {
-                    jsonReturn(res, true, "login success", { token: token })
+                jwt.sign({ infor }, 'votong123', { expiresIn: '6h' }, function (err, token) {
+                    jsonReturn(res, true, "login success", token, un)
                 });
             })
         })
@@ -45,8 +49,10 @@ module.exports.getUserById = (req, res) => {
 }
 
 module.exports.insertUser = (req, res) => {
-    var un = req.body.username
-    var pw = req.body.password
+    var un = req.body.un
+    var pw = req.body.pw
+    console.log(un);
+    
     if (!un || !pw)
         return jsonReturn(res, false, 'username or password invalid')
     modelUser.findOne({ username: un })
@@ -54,13 +60,13 @@ module.exports.insertUser = (req, res) => {
         .then(doc => {
             if (doc)
                 return jsonReturn(res, false, 'usersname existed')
-            bcrypt.hash(pw, 10, (err, hash) => {
+                bcrypt.hash(pw, 10, (err, hash) => {
                 new modelUser({
                     username: un,
                     password: hash,
                     admin: false
                 }).save()
-                    .then((doc) => jsonReturn(res, true, 'register success', doc))
+                    .then((doc) => jsonReturn(res, true, 'register success',null ,doc))
                     .catch((err) => jsonReturn(res, false, err))
             });
         })

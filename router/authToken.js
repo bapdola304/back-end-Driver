@@ -13,6 +13,9 @@ var parseToken = (req, res) => {
     var bearer = bearerHeader.split(' ')
     var bearerToken = bearer[1]
     req.token = bearerToken
+    console.log(bearerToken);
+    return bearerToken;
+    
 }
 module.exports.parseToken = parseToken
 module.exports.verifyTokenAdmin = (req, res, next) => {
@@ -28,7 +31,8 @@ module.exports.verifyTokenAdmin = (req, res, next) => {
 }
 module.exports.verifyTokenUser = (req, res, next) => {
     parseToken(req, res)
-    jwt.verify(req.token, 'votong123', (err, autData) => {
+    
+    jwt.verify( parseToken(req, res), 'votong123', (err, autData) => {
         if (err)
             return jsonReturn(res, false, "Token invalid")   
         next()

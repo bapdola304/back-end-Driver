@@ -9,6 +9,7 @@ fileRouter.use(fileUpload())
 fileRouter.get('/',verifyTokenUser, fileController.getFileByUserId)
 fileRouter.post('/',verifyTokenUser, fileController.inserFile)
 // fileRouter.delete('/all', verifyTokenUser, fileController.deleteAllFile)
-// fileRouter.delete('/', verifyTokenUser, fileController.deleteFile)
+fileRouter.delete('/:id', verifyTokenUser, fileController.deleteFile)
+fileRouter.put('/:id', verifyTokenUser, fileController.editFileName)
 
 module.exports = fileRouter
